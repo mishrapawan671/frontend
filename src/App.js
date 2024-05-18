@@ -1,5 +1,4 @@
-
-import { Routes,Route } from "react-router";
+import { Routes , Route} from 'react-router-dom'
 import Appnav from "./components/Appnav";
 import Menu from './components/Menu'
 import Orders from "./components/Orders";
@@ -10,22 +9,15 @@ import Profile from "./components/Profile";
 import Jumbotron from "./components/Jumbotron";
 import AddProduct from "./components/AddProduct";
 import RouteProtect from "./components/RouteProtect";
-import { Provider } from "react-redux";
-import { useEffect, useState } from "react";
+
+
 
 function App() {
-   const [isLogin,setLogin]=useState(false);
-   useEffect(()=>{
-     if(localStorage.getItem('user')!=null)
-      {
-        setLogin(true);
-      }
-   },[])
   return (
     <div className="App">
-      <Appnav/>
+      <Appnav />
       <Routes>
-        <Route path="/" element={<Jumbotron/>}/>
+        <Route path="/" element={ <Jumbotron/>}/>
         <Route path="/login" element={<Login/>}/>
         <Route path="/signup" element={<Signup/>}/>
         <Route path="/Menu" element={

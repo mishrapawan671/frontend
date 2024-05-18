@@ -1,19 +1,20 @@
 import React from 'react'
-import { LoginService } from '../services/AuthService';
 import { useNavigate } from 'react-router';
-
-
-
+import { useDispatch } from 'react-redux';
+import { loginAction } from '../reducers/AuthReducer';
 
 function Login() {
   const navigate=useNavigate();
+  const dispatch=useDispatch();
   function submithandler(event)
   {
     event.preventDefault();
      const user={"username":event.target.email.value, "password":event.target.password.value}
-     
-     LoginService(user);
-     navigate('/Menu');
+     dispatch(loginAction(user))
+     .then(()=>{
+      console.log('navigate to menu')
+      navigate('/menu')},(erro)=>console.log(erro))     ;
+
   }
   return (
     <div className='container'>

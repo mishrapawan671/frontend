@@ -1,12 +1,14 @@
  import React, { useState } from 'react';
+ import { Addproducts } from '../services/ProductService';
 
 function AddProduct ()  {
-  const [formData, setFormData] = useState({
-    productName: '',
-    quantity: '',
+  const initialform={
+    name: '',
+    quantity: 1,
     price: '',
     image: null
-  });
+  }
+  const [formData, setFormData] = useState(initialform);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -21,15 +23,33 @@ function AddProduct ()  {
   const handleSubmit = (e) => {
     e.preventDefault();
     // You can add your form submission logic here, such as sending the data to a server
-    console.log('Form submitted:', formData);
+      const form = new FormData();
+      form.append('name', formData['name']);
+      form.append('quantity', formData['quantity']);
+      form.append('price', formData['quantity']);
+      form.append('image',formData['image'] );
+
+       Addproducts(form)
+       .then(res=>{
+          if(res.status===200)
+            {
+              alert("product saved successfully")
+              setFormData(initialform)
+              
+
+            }
+       },er=>{
+        alert("something wrong happend? contact support team")
+       })
+
   };
 
   return (
     <div className='container'>
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} enctype="multipart/form-data" >
       <div className="mb-3">
-        <label htmlFor="productName" className="form-label">Product Name</label>
-        <input type="text" className="form-control" id="productName" name="productName" value={formData.productName} onChange={handleChange} />
+        <label htmlFor="name" className="form-label">Product Name</label>
+        <input type="text" className="form-control" id="name" name="name" value={formData.name} onChange={handleChange} />
       </div>
 
       <div className="mb-3">
