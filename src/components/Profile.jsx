@@ -1,15 +1,24 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
+import { getProfile, updateProfile } from '../services/AuthService';
 
 function Profile () {
-  const [formData, setFormData] = useState({
-    firstName: '',
-    lastName: '',
+  const forminitalstate={
+    firstname: '',
+    lastname: '',
     age: '',
     email: '',
     password: '',
     verifyPassword: '',
-    Address: ''
-  });
+    address: ''
+  }
+  const [formData, setFormData] = useState(forminitalstate);
+
+  useEffect(()=>{
+   getProfile()
+   .then(res=>{
+     setFormData(res.data);
+   })
+  },[])
 
   const [errors, setErrors] = useState({});
 
@@ -22,13 +31,13 @@ function Profile () {
     e.preventDefault();
     // Basic validation
     const newErrors = {};
-    if (!formData.firstName.trim()) {
-      newErrors.firstName = 'First name is required';
+    if (!formData.firstname.trim()) {
+      newErrors.firstname = 'First name is required';
     }
-    if (!formData.lastName.trim()) {
-      newErrors.lastName = 'Last name is required';
+    if (!formData.lastname.trim()) {
+      newErrors.lastname = 'Last name is required';
     }
-    if (!formData.age.trim()) {
+    if (formData.age <18) {
       newErrors.age = 'Age is required';
     }
     if (!formData.email.trim()) {
@@ -41,15 +50,26 @@ function Profile () {
       newErrors.verifyPassword = 'Passwords do not match';
     }
     if (!formData.address.trim()) {
-      newErrors.verifyAddress = 'Address can not be blank';
+      newErrors.verifyaddress = 'Address can not be blank';
     }
     setErrors(newErrors);
 
     // If there are no errors, you can submit the form
     if (Object.keys(newErrors).length === 0) {
-      // Submit the form data
-      console.log('Form submitted:', formData);
-      // You can add your submission logic here, such as sending the data to a server
+     
+      updateProfile(formData)
+      .then(res=>{
+        if(res.status===200)
+        {
+          alert("profile updated")
+        }
+        else
+        {
+          alert("something went wrong")
+        }
+      },error=>{
+        alert("something went wrong")
+      })
     }
   };
 
@@ -58,13 +78,13 @@ function Profile () {
     <form onSubmit={handleSubmit}>
       <div className="mb-3">
         <label htmlFor="firstName" className="form-label">First Name</label>
-        <input type="text" className={`form-control ${errors.firstName ? 'is-invalid' : ''}`} id="firstName" name="firstName" value={formData.firstName} onChange={handleChange} />
+        <input type="text" className={`form-control ${errors.firstName ? 'is-invalid' : ''}`} id="firstname" name="firstname" value={formData.firstname} onChange={handleChange} />
         {errors.firstName && <div className="invalid-feedback">{errors.firstName}</div>}
       </div>
 
       <div className="mb-3">
         <label htmlFor="lastName" className="form-label">Last Name</label>
-        <input type="text" className={`form-control ${errors.lastName ? 'is-invalid' : ''}`} id="lastName" name="lastName" value={formData.lastName} onChange={handleChange} />
+        <input type="text" className={`form-control ${errors.lastName ? 'is-invalid' : ''}`} id="lastname" name="lastname" value={formData.lastname} onChange={handleChange} />
         {errors.lastName && <div className="invalid-feedback">{errors.lastName}</div>}
       </div>
 
@@ -76,7 +96,7 @@ function Profile () {
 
       <div className="mb-3">
         <label htmlFor="email" className="form-label">Email</label>
-        <input type="email" className={`form-control ${errors.email ? 'is-invalid' : ''}`} id="email" name="email" value={formData.email} onChange={handleChange} />
+        <input type="email" disabled className={`form-control ${errors.email ? 'is-invalid' : ''}`} id="email" name="email" value={formData.email} onChange={handleChange} />
         {errors.email && <div className="invalid-feedback">{errors.email}</div>}
       </div>
 
@@ -93,11 +113,11 @@ function Profile () {
       </div>
        <div className="mb-3">
         <label htmlFor="address" className="form-label">address</label>
-        <input type="text-area" className={`form-control ${errors.Address ? 'is-invalid' : ''}`} id="verifyPassword" name="verifyPassword" value={formData.verifyPassword} onChange={handleChange} />
-        {errors.verifyPassword && <div className="invalid-feedback">{errors.verifyAddress}</div>}
+        <input type="text-area" className={`form-control ${errors.Address ? 'is-invalid' : ''}`} id="address" name="address" value={formData.address} onChange={handleChange} />
+        {errors.verifyPassword && <div className="invalid-feedback">{errors.verifyaddress}</div>}
       </div>
 
-      <button type="submit" className="btn btn-secondary">Sign Up</button>
+      <button type="submit" className="btn btn-secondary">Upate profile</button>
     </form>
     </div>
   );

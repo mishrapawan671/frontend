@@ -24,6 +24,66 @@ function IsLogedIn()
     
 }
 
+export function IsAdmin()
+{
+      
+      if(localStorage.getItem('token')!==null && localStorage.getItem('token')!==undefined)
+      {
+            const {role}=jwtDecode(localStorage.getItem('token'));
+            if(role==='seller')
+            return true;
+      return false;
+      }
+      else
+      {
+            return false;
+      }
+    
+}
+
+
+
+async function createUser(user)
+{
+
+      return await axios.post(AUTH_BASE+'signup',user)
+    
+}
+
+
+
+export async function getProfile()
+{
+    const token=localStorage.getItem('token');
+    return await axios.post(
+        AUTH_BASE+"getprofile",
+        {
+
+        },
+        {
+        headers: {
+            'token':token
+         }}
+        
+     )
+}
+
+export async function updateProfile(profile)
+{
+    const token=localStorage.getItem('token');
+    return await axios.post(
+        AUTH_BASE+"updateprofile",
+        profile,
+        {
+        headers: {
+            'token':token
+         }}
+        
+     )
+}
+
+
+
 function LogoutService()
 {
       localStorage.clear();
@@ -33,4 +93,4 @@ async function LoginService(user){
 
      return await axios.post(AUTH_BASE+'login',user)
 }
-export {LoginService,IsLogedIn,LogoutService}; 
+export {LoginService,IsLogedIn,LogoutService,createUser}; 

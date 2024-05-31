@@ -14,7 +14,32 @@ export async function Addproducts(formdata)
          }}
         
      )
-   
-    
+}
 
+export async function UpdateProduct(formdata)
+{
+    const token=localStorage.getItem('token');
+    return await axios.post(
+        AUTH_BASE+"/update",
+        formdata   ,
+        {
+        headers: {
+            'token':token
+         }}
+        
+     )
+}
+
+export async function DeleteProduct(formdata)
+{
+    const token=localStorage.getItem('token');
+    return await axios.post(
+        AUTH_BASE+"/delete",
+        formdata   ,
+        {
+        headers: {
+            'token':token
+         }}
+        
+     )
 }

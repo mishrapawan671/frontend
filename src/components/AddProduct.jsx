@@ -46,6 +46,7 @@ function AddProduct ()  {
 
   return (
     <div className='container'>
+      <h3>Add New Product</h3>
     <form onSubmit={handleSubmit} enctype="multipart/form-data" >
       <div className="mb-3">
         <label htmlFor="name" className="form-label">Product Name</label>
@@ -69,7 +70,7 @@ function AddProduct ()  {
         <label htmlFor="image" className="form-label">Image</label>
         <input type="file" className="form-control" id="image" name="image" onChange={handleImageChange} accept="image/*" />
       </div>
-      <button type="submit" className="btn btn-primary">Add Product</button>
+      <button type="submit" className="btn btn-secondary">Add Product</button>
     </form>
     </div>
   );

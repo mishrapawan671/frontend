@@ -6,14 +6,18 @@ import { loginAction } from '../reducers/AuthReducer';
 function Login() {
   const navigate=useNavigate();
   const dispatch=useDispatch();
+  
   function submithandler(event)
   {
     event.preventDefault();
      const user={"username":event.target.email.value, "password":event.target.password.value}
      dispatch(loginAction(user))
-     .then(()=>{
-      console.log('navigate to menu')
-      navigate('/menu')},(erro)=>console.log(erro))     ;
+     .then(
+      (res)=>{ 
+      navigate('/menu')
+       },
+      (error)=>{console.log(error)
+       alert( " incorred username or password")}) ;
 
   }
   return (

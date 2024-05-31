@@ -7,8 +7,9 @@ import Login from "./components/Login";
 import Cart from "./components/Cart";
 import Profile from "./components/Profile";
 import Jumbotron from "./components/Jumbotron";
-import AddProduct from "./components/AddProduct";
 import RouteProtect from "./components/RouteProtect";
+import Checkout from "./components/Checkout";
+import Admindashboard from "./components/Admindashboard"
 
 
 
@@ -42,11 +43,19 @@ function App() {
             <Profile/>
           </RouteProtect>
         }/>
-         <Route path="/AddProduct" element={
+         <Route path="/Admin" element={
           <RouteProtect redirectTo='/'>
-            <AddProduct/>
+            <Admindashboard/>
           </RouteProtect>
+          
          }/>
+         <Route path="/Checkout" element={
+          <RouteProtect redirectTo='/'>
+            <Checkout/>
+          </RouteProtect>
+          
+         }/>
+
       </Routes>
     </div>
   );

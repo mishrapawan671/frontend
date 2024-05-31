@@ -16,8 +16,6 @@ function loginAction(loginDetail)
         {
             throw error;
         }
-        
-          
         const user=jwtDecode(localStorage.getItem('token'))
 
           dispatch({
@@ -56,6 +54,8 @@ function LoginLogoutReducer(state=intialState,action)
     }
      
 }
+
+
 
 
 export {loginAction,LogoutAction,LoginLogoutReducer}

@@ -1,5 +1,6 @@
 import { LoginLogoutReducer } from "../reducers/AuthReducer";
 import { CartReducer } from "../reducers/CartReducers";
+import LoaderReducer from "../reducers/LoaderReducer"
 
 import { persistStore, persistReducer } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
@@ -39,13 +40,15 @@ const persistConfig = {
  key: 'root',
  storage: storage,
  stateReconciler: autoMergeLevel2 ,// see "Merge Process" section for details.
- transforms: [SetTransform]
+ transforms: [SetTransform],
+ blacklist: ['CartReducer'] 
 };
 
 
 const reducers=combineReducers({
       LoginLogoutReducer:LoginLogoutReducer,
-       CartReducer: CartReducer
+       CartReducer: CartReducer,
+       LoaderReducer:LoaderReducer
 })
 
 

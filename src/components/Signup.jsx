@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import {createUser} from '../services/AuthService'
+
 
 function Signup () {
   const [formData, setFormData] = useState({
@@ -43,9 +45,23 @@ function Signup () {
 
     // If there are no errors, you can submit the form
     if (Object.keys(newErrors).length === 0) {
-      // Submit the form data
-      console.log('Form submitted:', formData);
-      // You can add your submission logic here, such as sending the data to a server
+      
+      createUser(formData)
+      .then(res=>{
+        if(res.status===200)
+          {
+            alert('you are successfully registerd , go to login page to order')
+          }
+          else
+          {
+            alert('ohh we missed something ..please try to signup again')
+          }
+
+      },error=>{
+        alert('someting went wrong')
+      })
+
+
     }
   };
 
